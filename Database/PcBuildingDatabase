@@ -1,0 +1,219 @@
+drop table if exists pc_case;
+drop table if exists psu;
+drop table if exists ram;
+drop table if exists motherboard;
+drop table if exists graphics_card;
+drop table if exists processor;
+drop table if exists fans;
+drop table if exists cpu_cooler;
+drop table if exists storage_drive;
+drop table if exists psu_wattage;
+drop table if exists form_factor;
+drop table if exists ram_type;
+drop table if exists socket;
+drop table if exists brand;
+
+create table brand (
+	brand_id serial primary key,
+	brand_name varchar(20) unique not null
+);
+
+create table socket (
+	socket_id serial primary key,
+	socket_type varchar(20) unique not null
+);
+
+create table ram_type (
+	ram_type_id serial primary key,
+	ram_type_name varchar(5) unique not null
+);
+
+create table form_factor (
+	form_factor_id serial primary key,
+	form_factor_name varchar(12) unique not null
+);
+
+create table psu_wattage (
+	psu_wattage_id serial primary key,
+	wattage int unique not null
+);
+
+create table storage_drive (
+	storage_drive_id serial primary key,
+	brand_id int references brand not null,
+	product_name varchar(50) not null,
+	model varchar(50) unique not null,
+	capacity_gb int not null,
+	form_factor varchar(10) not null,
+	price numeric(5,2) not null
+);
+
+create table cpu_cooler (
+	cpu_cooler_id serial primary key,
+	brand_id int references brand not null,
+	product_name varchar(50) not null,
+	model varchar(50) unique not null,
+	cooler_type varchar(10) not null,
+	size_mm int not null,
+	rgb boolean not null,
+	price numeric(5,2) not null
+);
+
+create table fans (
+	fan_id serial primary key,
+	brand_id int references brand not null,
+	product_name varchar(50) not null,
+	model varchar(50) unique not null,
+	size_mm int not null,
+	num_of_fans int not null,
+	fan_color varchar(20) not null,
+	rgb boolean not null,
+	price numeric(5,2)
+);
+
+create table processor (
+	processor_id serial primary key,
+	socket_id int references socket,
+	ram_type_id int references ram_type,
+	product_name varchar(50) not null,
+	brand_id int references brand not null,
+	model varchar(50) unique not null,
+	price numeric(5,2) not null
+);
+
+create table graphics_card (
+	graphics_card_id serial primary key,
+	psu_wattage_id int references psu_wattage,
+	brand_id int references brand not null,
+	product_name varchar(50) not null,
+	model varchar(50) unique not null,
+	price numeric(5,2)
+);
+
+create table motherboard (
+	motherboard_id serial primary key,
+	socket_id int references socket,
+	form_factor_id int references form_factor,
+	ram_type_id int references ram_type,
+	brand_id int references brand not null,
+	product_name varchar(50) not null,
+	model varchar(50) unique not null,
+	price numeric(5,2) not null
+);
+
+create table ram (
+	ram_id serial primary key,
+	ram_type_id int references ram_type,
+	brand_id int references brand not null,
+	product_name varchar(50) not null,
+	model varchar(50) unique not null,
+	capacity_gb int not null,
+	num_of_sticks int not null,
+	rgb boolean not null,
+	price numeric(5,2)
+);
+
+create table psu (
+	psu_id serial primary key,
+	psu_wattage_id int references psu_wattage,
+	brand_id int references brand not null,
+	product_name varchar(50) not null,
+	model varchar(50) unique not null,
+	cable_type varchar(20) not null,
+	energy_efficiency varchar(20) not null,
+	price numeric(5,2)
+);
+
+create table pc_case (
+	case_id serial primary key,
+	form_factor_id int references form_factor,
+	brand_id int references brand not null,
+	product_name varchar(50) not null,
+	model varchar(50) unique not null,
+	color varchar(20) not null,
+	rgb boolean not null,
+	length_mm int not null,
+	width_mm int not null,
+	num_fans_included int not null,
+	price numeric(5,2) not null
+);
+
+insert into brand (brand_name) values
+/*1*/('Adata'), /*2*/('AMD'), /*3*/('Arctic Cooling'), /*4*/('ASRock'), /*5*/('Asus'),
+/*6*/('be quiet'),
+/*7*/('Cooler Master'), /*8*/('Corsair'), 
+/*9*/('DeepCool'),
+/*10*/('EVGA'),
+/*11*/('Fractal Design'), /*12*/('Frozn'),
+/*13*/('G.Skill'), /*14*/('Gigabyte'),
+/*15*/('Hyte'),
+/*16*/('Inland'), /*17*/('Intel'),
+/*18*/('Lian Li'),
+/*19*/('Montech'), /*20*/('MSI'),
+/*21*/('Noctua'), /*22*/('Nvidia'), /*23*/('NZXT'),
+/*24*/('Patriot'), /*25*/('PNY'), /*26*/('PowerSpec'),
+/*27*/('Samsung'), /*28*/('Seagate'), /*29*/('SK Hynix'),
+/*30*/('TeamGroup'), /*31*/('Thermaltake'),
+/*32*/('Western Digital'),
+/*33*/('Crucial'),
+/*34*/('Seasonic');
+
+insert into socket (socket_type) values
+('AM4'),
+('AM5'),
+('LGA 1700');
+
+insert into ram_type (ram_type_name) values
+('DDR4'),
+('DDR5');
+
+insert into form_factor (form_factor_name) values
+('Mini-ITX'),
+('microATX'),
+('ATX'),
+('e-ATX');
+
+insert into psu_wattage (wattage) values
+(400), (500), (550), (600), (650), (700), (750),
+(850), (1000), (1200), (1300), (1600);
+
+insert into storage_drive (brand_id, product_name, model, capacity_gb, form_factor, price) values
+(27, '970 EVO Plus', 'MZ-V7S2T0B/AM', 2000, 'M.2', 239.99),
+(27, '980 PRO 1TB', 'MZ-V8P1T0B/AM', 1000, 'M.2', 154.99),
+(27, '980 PRO 2TB', 'MZ-V8P2T0B/AM', 2000, 'M.2', 219.99),
+(27, '990 PRO 1TB Heatsink', 'MZ-V9P1T0CW', 1000, 'M.2', 149.99),
+(27, '990 PRO 2TB', 'MZ-V9P2T0B/AM', 2000, 'M.2', 249.99),
+(27, '990 EVO 1TB', 'MZ-V9E1T0B/AM', 1000, 'M.2', 149.99),
+(27, '870 EVO 1TB', 'MZ-77E1T0B/AM', 1000, 'SATA', 144.99),
+(27, '870 EVO 4TB', 'MZ-77E4T0B/AM', 4000, 'SATA', 489.99),
+(27, '870 EVO 2TB', 'MZ-77E2T0B/AM', 2000, 'SATA', 254.99),
+(27, '870 QVO 2TB', 'MZ-77Q2T0B/AM', 2000, 'SATA', 184.99),
+(32, 'Black SN770 500GB', 'WDBBDL5000ANC-WRSN', 500, 'M.2', 79.99),
+(32, 'Black SN770 2TB', 'WDBBDL0020BNC-WRSN', 2000, 'M.2', 239.99),
+(32, 'Black SN850X 4TB', 'WDBB9G0040BNC-WRSN', 4000, 'M.2', 399.99),
+(32, 'Black SN850X 1TB', 'WDBB9G0010BNC-WRSN', 1000, 'M.2', 129.99),
+(32, 'Blue SA510 1TB', 'WDBB8H0010BNC-WRSN', 1000, 'SATA', 107.99),
+(32, 'Blue SN580 1TB', 'WDBWMY0010BBL-WRSN', 1000, 'M.2', 93.99),
+(32, 'Blue 1TB HDD', 'WD10SPZX/WDBMYH0010BNC-NRSN', 1000, 'SATA', 52.99),
+(32, 'Black SN850P 4TB Heatsink', 'WDBBYV0040BNC-WRSN', 4000, 'M.2', 499.99),
+(32, 'Black Gaming 4TB HDD', 'WD4005FZBX/WDBSLA0040HNC-NRSN', 4000, 'M.2', 179.99),
+(33, 'MX500 2TB', 'CT2000MX500SSD1', 2000, 'SATA', 199.99),
+(33, 'MX500 500GB', 'CT500MX500SSD1', 500, 'SATA', 79.99),
+(33, 'P3 1TB', 'CT1000P3SSD8', 1000, 'M.2', 89.99),
+(33, 'P3 4TB', 'CT4000P3SSD8', 4000, 'M.2', 344.99),
+(33, 'P3 Plus 2TB', 'CT2000P3PSSD8', 2000, 'M.2', 169.99),
+(33, 'T500 1TB Heatsink', 'CT1000T500SSD5', 1000, 'M.2', 141.99),
+(33, 'T500 2TB Heatsink', 'CT2000T500SSD5', 2000, 'M.2', 228.99),
+(33, 'BX500 1TB', 'CT1000BX500SSD1', 1000, 'SATA', 94.99),
+(33, 'T700 2TB', 'CT2000T700SSD3', 2000, 'M.2', 349.99),
+(33, 'T700 4TB', 'CT4000T700SSD3', 4000, 'M.2', 599.99),
+(28, 'Game Drive 1TB Heatsink', 'ZP1000GP3A1011', 1000, 'M.2', 124.99),
+(28, 'Game Drive 2TB Heatsink', 'ZP2000GP3A1001', 2000, 'M.2', 319.99),
+(28, 'FireCuda 530 1TB Heatsink', 'ZP1000GM3A023', 1000, 'M.2', 249.99),
+(28, 'FireCuda 530 4TB Heatsink', 'ZP4000GM3A023', 4000, 'M.2', 959.99),
+(28, 'Lightsaber FireCuda 2TB', 'ZP2000GM3A033', 2000, 'M.2', 239.99),
+(28, 'Barracuda 8TB HDD', 'ST8000DMA04', 8000, 'SATA', 149.99),
+(28, 'IronWolf Pro 16TB HDD', 'ST16000NTA01', 16000, 'SATA', 329.99);
+
+
+
