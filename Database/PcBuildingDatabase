@@ -213,7 +213,16 @@ insert into storage_drive (brand_id, product_name, model, capacity_gb, form_fact
 (28, 'FireCuda 530 4TB Heatsink', 'ZP4000GM3A023', 4000, 'M.2', 959.99),
 (28, 'Lightsaber FireCuda 2TB', 'ZP2000GM3A033', 2000, 'M.2', 239.99),
 (28, 'Barracuda 8TB HDD', 'ST8000DMA04', 8000, 'SATA', 149.99),
-(28, 'IronWolf Pro 16TB HDD', 'ST16000NTA01', 16000, 'SATA', 329.99);
+(28, 'IronWolf Pro 16TB HDD', 'ST16000NTA01', 16000, 'SATA', 329.99),
+(1, 'XPG GAMMIX S70 Blade 2TB Heatsink', 'AGAMMIXS70B-2T-CS', 2000, 'M.2', 179.99),
+(1, 'XPG GAMMIX S70 Blade 1TB Heatsink', 'AGAMMIXS70B-1T-CS', 1000, 'M.2', 99.99),
+(1, 'XPG GAMMIX S70 Blade 8TB Heatsink', 'AGAMMIXS70B-8T-CS', 8000, 'M.2', 899.99),
+(8, 'MP600 PRO LPX 2TB Heatsink', 'CSSD-F2000GBMP600PLP', 2000, 'M.2', 209.99),
+(25, 'CS1030 2TB', 'M280CS1030-2TB-RB', 2000, 'M.2', 109.99),
+(29, 'Platinum P41 2TB', 'HFS2T0GEJ9X', 2000, 'M.2', 179.99),
+(29, 'Gold P31 1TB', 'HFS1T0GDE9X', 1000, 'M.2', 99.99),
+(16, 'TN470 1TB', '1TBTN470', 1000, 'M.2', 84.99),
+(16, 'TN320 256GB', '256GTN320NVME', 256, 'M.2', 29.99);
 
 
 
