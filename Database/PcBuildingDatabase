@@ -55,6 +55,7 @@ create table cpu_cooler (
 	model varchar(50) unique not null,
 	cooler_type varchar(10) not null,
 	size_mm int not null,
+	color varchar(20) not null,
 	rgb boolean not null,
 	price numeric(5,2) not null
 );
@@ -223,6 +224,28 @@ insert into storage_drive (brand_id, product_name, model, capacity_gb, form_fact
 (29, 'Gold P31 1TB', 'HFS1T0GDE9X', 1000, 'M.2', 99.99),
 (16, 'TN470 1TB', '1TBTN470', 1000, 'M.2', 84.99),
 (16, 'TN320 256GB', '256GTN320NVME', 256, 'M.2', 29.99);
-
+insert into cpu_cooler (brand_id, product_name, model, cooler_type, size_mm, color, rgb, price) values
+(9, 'AK620 ZERO DARK', 'RAK620BKNNMTG1', 'Air', 120, 'Black', false, 69.99),
+(9, 'AK400 WH', 'R-AK400-WHNNMN', 'Air', 120, 'White', false, 37.99),
+(21, 'NH-D15S Chromax', 'NH-D15S CH.BK', 'Air', 140, 'Black', false, 119.99),
+(7, 'Hyper 212 Spectrum V3', 'RR-S4NA-17PA-R1', 'Air', 120, 'Black', true, 19.99),
+(7, 'Hyper 212 Halo', 'RR-S4WW-20PA-R1', 'Air', 120, 'White', true, 34.99),
+(31, 'UX100 ARGB Universal', 'CLP064AL12SWA', 'Air', 120, 'Black', true, 19.99),
+(23, 'Kraken 120mm Radiator', 'RL-KR120-B1', 'Liquid', 120, 'Black', true, 89.99),
+(18, 'Galahad II Trinity', 'G89.GA2T36B.00', 'Liquid', 360, 'Black', true, 149.99),
+(9, 'LT720 WH Premium', 'RLT720WHAMNFG1', 'Liquid', 360, 'White', true, 139.99),
+(23, 'Kraken Elite RGB', 'RL-KR36E-W1', 'Liquid', 360, 'White', true, 299.99),
+(23, 'Kraken 240mm', 'RL-KN240-B1', 'Liquid', 240, 'Black', false, 139.99),
+(23, 'Kraken Elite 240', 'RL-KR24E-B1', 'Liquid', 240, 'Black', true, 259.99),
+(5, 'ROG STRIX LC II', 'STX LC2 360ARGB', 'Liquid', 360, 'Black', true, 149.99),
+(8, 'iCue H100i ELITE CAPELLIX XT', 'CW-9060068-WW', 'Liquid', 240, 'Black', true, 179.99),
+(8, 'iCue Link H100i RGB', 'CW-9061001-WW', 'Liquid', 240, 'Black', true, 199.99),
+(8, 'iCue Link H150i RGB', 'CW-9061003-WW', 'Liquid', 360, 'Black', true, 239.99),
+(8, 'iCue H60X RGB ELITE', 'CW-9060064-WW2', 'Liquid', 120, 'Black', true, 79.99),
+(20, 'MAG CoreLiquid 240R V2', 'CORELIQUID240R2', 'Liquid', 240, 'Black', true, 109.99),
+(6, 'DARK ROCK PRO 5', 'BK036', 'Air', 120, 'Black', false, 99.99),
+(9, 'ASSASSIN IV', 'R-ASN4-BKNNMT-G', 'Air', 120, 'Black', false, 99.99),
+(31, 'UX200 SE', 'CL-P105-AL12SW', 'Air', 120, 'Black', true, 29.99),
+(12, 'A620 aRGB', 'ID-COOLING FROZ', 'Air', 120, 'Black', true, 64.99);
 
 
