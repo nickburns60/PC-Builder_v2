@@ -25,7 +25,7 @@ create table socket (
 
 create table ram_type (
 	ram_type_id serial primary key,
-	ram_type_name varchar(5) unique not null
+	ram_type_name varchar(15) unique not null
 );
 
 create table form_factor (
@@ -67,28 +67,28 @@ create table fans (
 	model varchar(50) unique not null,
 	size_mm int not null,
 	num_of_fans int not null,
-	fan_color varchar(20) not null,
+	color varchar(20) not null,
 	rgb boolean not null,
 	price numeric(5,2)
 );
 
 create table processor (
 	processor_id serial primary key,
+	brand_id int references brand not null,
 	socket_id int references socket,
 	ram_type_id int references ram_type,
 	product_name varchar(50) not null,
-	brand_id int references brand not null,
 	model varchar(50) unique not null,
 	price numeric(5,2) not null
 );
 
 create table graphics_card (
 	graphics_card_id serial primary key,
-	psu_wattage_id int references psu_wattage,
 	brand_id int references brand not null,
 	product_name varchar(50) not null,
 	model varchar(50) unique not null,
-	price numeric(5,2)
+	psu_wattage_id int references psu_wattage,
+	price numeric(6,2)
 );
 
 create table motherboard (
@@ -157,7 +157,8 @@ insert into brand (brand_name) values
 /*30*/('TeamGroup'), /*31*/('Thermaltake'),
 /*32*/('Western Digital'),
 /*33*/('Crucial'),
-/*34*/('Seasonic');
+/*34*/('Seasonic'),
+/*35*/('XFX');
 
 insert into socket (socket_type) values
 ('AM4'),
@@ -166,7 +167,8 @@ insert into socket (socket_type) values
 
 insert into ram_type (ram_type_name) values
 ('DDR4'),
-('DDR5');
+('DDR5'),
+('DDR4 or DDR5');
 
 insert into form_factor (form_factor_name) values
 ('Mini-ITX'),
@@ -176,7 +178,7 @@ insert into form_factor (form_factor_name) values
 
 insert into psu_wattage (wattage) values
 (400), (500), (550), (600), (650), (700), (750),
-(850), (1000), (1200), (1300), (1600);
+(850), (1000), (1200), (1300), (1600), (800);
 
 insert into storage_drive (brand_id, product_name, model, capacity_gb, form_factor, price) values
 (27, '970 EVO Plus', 'MZ-V7S2T0B/AM', 2000, 'M.2', 239.99),
@@ -224,6 +226,7 @@ insert into storage_drive (brand_id, product_name, model, capacity_gb, form_fact
 (29, 'Gold P31 1TB', 'HFS1T0GDE9X', 1000, 'M.2', 99.99),
 (16, 'TN470 1TB', '1TBTN470', 1000, 'M.2', 84.99),
 (16, 'TN320 256GB', '256GTN320NVME', 256, 'M.2', 29.99);
+
 insert into cpu_cooler (brand_id, product_name, model, cooler_type, size_mm, color, rgb, price) values
 (9, 'AK620 ZERO DARK', 'RAK620BKNNMTG1', 'Air', 120, 'Black', false, 69.99),
 (9, 'AK400 WH', 'R-AK400-WHNNMN', 'Air', 120, 'White', false, 37.99),
@@ -248,4 +251,66 @@ insert into cpu_cooler (brand_id, product_name, model, cooler_type, size_mm, col
 (31, 'UX200 SE', 'CL-P105-AL12SW', 'Air', 120, 'Black', true, 29.99),
 (12, 'A620 aRGB', 'ID-COOLING FROZ', 'Air', 120, 'Black', true, 64.99);
 
+insert into fans (brand_id, product_name, model, size_mm, num_of_fans, color, rgb, price) values
+(18, 'Uni Fan SL Infinity', 'G99.12SLIN1W.00', 120, 1, 'White', true, 32.99),
+(18, 'Uni Fan Reverse SL Infinity', 'G99.12RSLIN1B.0', 120, 1, 'Black', true, 29.99),
+(18, 'Uni Fan SL140 V2', 'G99.14SLV21B.00', 140, 1, 'Black', true, 29.99),
+(18, 'AL120 V2', 'G99.12ALV23B.00', 120, 3, 'Black', true, 89.99),
+(8, 'iCue Link QX120 RGB', 'CO-9051002-WW', 120, 3, 'Black', true, 159.99),
+(8, 'AF120 RGB ELITE', 'CO-9050154-WW', 120, 3, 'Black', true, 89.99),
+(8, 'AF140 RGB ELITE', 'CO-9050156-WW', 140, 2, 'Black', true, 74.99),
+(8, 'QL Series RGB', 'CO-9050106-WW', 140, 2, 'White', true, 119.99),
+(8, 'LL Seires RGB', 'CO-9050071-WW', 120, 1, 'Black', true, 39.99),
+(8, 'iCue SP120 RGB ELITE Performance', 'CO-9050109-WW', 120, 3, 'Black', true, 79.99),
+(21, 'NF-P12 Redux', 'NF-P12 REDUX-17', 120, 1, 'Gray', false, 15.99),
+(21, 'NF-A12X15', 'NF-A12x15 PWM', 120, 1, 'Brown', false, 24.99),
+(3, 'P12 Fluid Dynamic Bearing', 'ACFAN00135A', 120, 5, 'Black', false, 31.99),
+(3, 'P12 PWM PST Fluid Dynamic Bearing', 'ACFAN00120A', 120, 1, 'Black', false, 9.99),
+(9, 'FC120 RGB Hydro Bearing', 'RFC120WHAMN3G1', 120, 3, 'White', true, 49.99),
+(15, 'Flow FA12 Fluid Dynamic Bearing', 'FAN-HYTE-001', 120, 3, 'Gray', false, 24.99),
+(31, 'Riing 12 LED', 'CL-FO38-PL12WT-A', 120, 1, 'Black', false, 16.99),
+(31, 'Riing Quad', 'CL-F088-PL12SW-B', 120, 3, 'Black', true, 119.99),
+(31, 'Riing Quad', 'CL-F100-PL12SW-B', 120, 3, 'White', true, 119.99),
+(31, 'Pure 20', 'CL-F0150PL20BL-A', 200, 1, 'Black', false, 13.99),
+(23, 'F140 Duo RGB', 'RF-D14SF-W1', 140, 1, 'White', true, 34.99),
+(23, 'F120 RGB', 'RF-R12SF-B1', 120, 1, 'Black', true, 24.99);
 
+insert into processor (brand_id, socket_id, ram_type_id, product_name, model, price) values
+(17, 3, 3, 'Core i5-12600K', 'BX8071512600K', 299.99),
+(17, 3, 3, 'Core i7-12700K', 'BX8071512700K', 419.99),
+(17, 3, 3, 'Core i9-12900K', 'BX8071512900K', 619.99),
+(17, 3, 3, 'Core i5-13600K', 'BX8071513600K', 339.99),
+(17, 3, 3, 'Core i7-13700K', 'BX8071513700K', 489.99),
+(17, 3, 3, 'Core i9-13900K', 'BX8071513900K', 689.99),
+(17, 3, 3, 'Core i5-14600K', 'BX8071514600K', 339.99),
+(17, 3, 3, 'Core i7-14700K', 'BX8071514700K', 444.99),
+(17, 3, 3, 'Core i9-14900K', 'BX8071514900K', 619.99),
+(2, 1, 1, 'Ryzen 5 5600X', '100-100000065BOX', 299.00),
+(2, 1, 1, 'Ryzen 7 5800X', '100-100000063WOF', 449.00),
+(2, 1, 1, 'Ryzen 9 5900X', '100-100000061WOF', 549.00),
+(2, 2, 2, 'Ryzen 5 7600X', '100-100000593WOF', 299.99),
+(2, 2, 2, 'Ryzen 7 7700X', '100-100000591WOF', 399.99),
+(2, 2, 2, 'Ryzen 9 7900X', '100-100000589WOF', 549.99);
+
+insert into graphics_card (brand_id, product_name, model, psu_wattage_id, price) values
+(22, 'GeForce RTX 3060 Ti Founders Edition', '900-1G142-2520-000', 4, 349.99),
+(22, 'GeForce RTX 3070 Ti Founders Edition', '900-1G143-2520-000', 7, 419.99),
+(22, 'GeForce RTX 3080 Founders Edition', '900-1G133-2530-000', 7, 599.99),
+(22, 'GeFroce RTX 3080 Ti Founders Edition', '900-1G133-2518-000', 7, 699.99),
+(22, 'GeForce RTX 3090 Ti Founders Edition', '900-1G136-2505-000', 9, 849.99),
+(22, 'GeForce RTX 4060 Ti Founders Edition', '900-1G1410-2560-000', 3, 399.00),
+(22, 'GeForce RTX 4070 Founders Edition', '900-1G141-2544-000', 5, 549.99),
+(22, 'GeForce RTX 4070 Super Founders Edition', '900-1G141-2534-000', 5, 599.99),
+(22, 'GeForce RTX 4080 Founders Edition', '900-1G136-2560-000', 7, 949.99),
+(22, 'GeForce RTX 4080 Super Founders Edition', '900-1G136-2555-000', 7, 999.99),
+(22, 'GeForce RTX 4090 Founders Edition', '900-1G136-2530-000', 8, 1599.99),
+(20, 'AMD Radeon RX 6500 XT Mech 2X', 'RX 6500 XT MECH 2X 4G OC', 1, 189.99),
+(35, 'Speedster SWFT210 AMD Radeon RX 6600 Core', 'RX-66XL8LFDR', 5, 279.99),
+(35, 'Speedster SWFT210 AMD Radeon RX 6650XT Core', 'RX-665X8DFDR', 2, 319.99),
+(35, 'Speedster SWFT309 AMD Radeon RX 6700XT', 'RX-67XTYJFDR', 5, 409.99),
+(35, 'Speedster SWFT319 AMD Radeon RX 6800', 'RX-68XLAQBDR', 7, 439.99),
+(35, 'Speedster QICK308 AMD Radeon RX 7600', 'RX-76PQICKBY', 3, 279.99),
+(14, 'Radeon RX 7600 XT Gaming OC', 'GV-R76XTGAMING OC-16GD', 4, 329.99),
+(14, 'Radeon RX 7700XT Gaming OC', 'GV-R77XTGAMING OC-12GD', 6, 419.99),
+(14, 'Radeon RX 7800XT Gaming OC', 'GV-R78XTGAMING OC-16GD', 6, 499.99),
+(35, 'Speedster MERC310 AMD Radeon RX 7900XT', 'RX-79TMERCUR', 13, 819.99);
