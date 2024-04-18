@@ -358,3 +358,24 @@ insert into ram (brand_id, product_name, model, ram_type_id, capacity_gb, num_of
 (13, 'Ripjaws S5 Series 32GB', '6000J322X16RS5K', 2, 32, 2, false, 149.99),
 (30, 'T-Force Xtreem Overclocking 48GB', 'FFXD548G8200HC3', 2, 48, 2, false, 319.99);
 
+insert into psu (brand_id, product_name, model, psu_wattage_id, cable_type, energy_efficiency, price) values
+(8, 'RM750e', 'CP-9020262-NA', 7, 'Fully Modular', '80 Plus Gold', 99.99),
+(23, 'C850', 'PA-8G1BB-US', 8, 'Fully Modular', '80 Plus Gold', 139.99),
+(31, 'Toughpower GX2', 'PSTPD0600NNFAGU', 4, 'Non-Modular', '80 Plus Gold', 69.99),
+(31, 'Smart Series', 'PS-SPD-0700NPCW', 6, 'Non-Modular', '80 Plus', 59.99),
+(10, '850W Modular BQ Power Supply', '110-BQ-0850-V1', 8, 'Semi-Modular', '80 Plus Bronze', 119.99),
+(20, 'MPG A1000G PCIE5', 'MPGA1000GPCIE5', 9, 'Fully Modular', '80 Plus Gold', 199.99),
+(10, 'SuperNOVA 1000 GT', '220-GT-1000-X1', 9, 'Fully Modular', '80 Plus Gold', 189.99),
+(8, 'RMx Series RM1000x', 'CP-9020201-NA', 9, 'Fully Modular', '80 Plus Gold', 189.99),
+(8, 'CX-M Series CX750M', 'CP-9020222-NA', 7, 'Semi-Modular', '80 Plus Bronze', 89.99),
+(8, 'HXi Series', 'CP-9020259-NA', 9, 'Fully-Modular', '80 Plus Platinum', 259.99),
+(10, '650 BP', '100-BP-0650-K1', 5, 'Non-Modular', '80 Plus Bronze', 74.99),
+(20, 'MAG A750GL PCIE5', 'MAG A750GL PCIE', 7, 'Fully Modular', '80 Plus Gold', 99.99),
+(26, 'Power Supply Fixed Cable', 'PS500WF', 2, 'Non-Modular', '80 Plus', 49.99),
+(5, 'TUF Gaming 750 Watt 80 Plus Gold', 'TUF-GAMING-750G', 7, 'Fully Modular', '80 Plus Gold', 134.99),
+(34, 'USA Focus V3 GX-750', 'SSR-750FX3', 7, 'Fully Modular', '80 Plus Gold', 129.99),
+(34, 'USA Focus V3 GX-850', 'SSR-850FX3', 8, 'Fully Modular', '80 Plus Gold', 159.99),
+(18, 'SP850', 'G89.SP850W.01US', 8, 'Fully Modular', '80 Plus Gold', 149.99),
+(13, '750 Watt 80 Plus Gold ATX', 'GPX750S', 7, 'Fully Modular', '80 Plus Gold', 139.99);
+
+
