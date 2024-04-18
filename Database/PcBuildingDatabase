@@ -340,3 +340,21 @@ insert into motherboard (brand_id, product_name, model, socket_id, form_factor_i
 (20, 'X670E MAG Tomahawk WiFi', 'MAGX670ETOMAHAW', 2, 3, 2, 279.99),
 (14, 'B650 Gaming X AX V2', 'B650GAMXAXV2', 2, 3, 2, 199.99);
 
+insert into ram (brand_id, product_name, model, ram_type_id, capacity_gb, num_of_sticks, rgb, price) values
+(13, 'Ripjaws V 16GB', '3200C16D16GVKB', 1, 16, 2, false, 59.99),
+(8, 'Vengeance LPX 64GB', 'CMK64GX4M2E3200', 1, 64, 2, false, 164.99),
+(8, 'Vengeance RGB Pro 64GB', 'CMW64GX4M2D3600', 1, 64, 2, true, 234.99),
+(30, 'T-FORCE VULCAN Z 32GB', 'TLZGD432G3200H', 1, 32, 2, false, 79.99),
+(24, 'Viper Steel RGB 16GB', 'PVSR416G360C8K', 1, 16, 2, true, 59.99),
+(8, 'Dominator Platinum RGB AMD Optimized 32GB', 'CMT32GX4M2E3200', 1, 32, 2, true, 111.99),
+(13, 'Trident Z RGB 16GB', 'F4320016D16GTZR', 1, 16, 2, true, 79.99),
+(33, 'Pro 64GB Kit', 'CP2K32G4DFRA32A', 1, 64, 2, false, 169.99),
+(13, 'Flare X5 Series 64GB', '6000J302X32FX5', 2, 64, 2, false, 279.99),
+(13, 'Trident Z5 Neo RGB 32GB', '6400J322X165NRW', 2, 32, 2, false, 179.99),
+(30, 'T-Force Delta RGB 32GB', 'FF4D532G6000HC', 2, 32, 2, true, 169.99),
+(8, 'Vengeance RGB 32GB', 'CMH32GX5M2B56WK', 2, 32, 2, true, 159.99),
+(8, 'Vengeance 64GB', 'CMK64GX5M2B6000', 2, 64, 2, false, 249.99),
+(8, 'Dominator Titanium RGB 96GB', '96GX5M2B6600C32', 2, 96, 2, true, 489.99),
+(13, 'Ripjaws S5 Series 32GB', '6000J322X16RS5K', 2, 32, 2, false, 149.99),
+(30, 'T-Force Xtreem Overclocking 48GB', 'FFXD548G8200HC3', 2, 48, 2, false, 319.99);
+
