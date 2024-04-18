@@ -378,4 +378,10 @@ insert into psu (brand_id, product_name, model, psu_wattage_id, cable_type, ener
 (18, 'SP850', 'G89.SP850W.01US', 8, 'Fully Modular', '80 Plus Gold', 149.99),
 (13, '750 Watt 80 Plus Gold ATX', 'GPX750S', 7, 'Fully Modular', '80 Plus Gold', 139.99);
 
+insert into pc_case (brand_id, product_name, model, form_factor_id, color, rgb, length_mm, width_mm, num_fans_included, price) values
+(8, 'iCue 5000D RGB AirFlow Tempered Glass', 'CC-9011242-WW', 3, 'Black', true, 520, 245, 3, 219.99),
+(23, 'H6 FlowRGB Tempered Glass', 'CC-H61FW-R1', 3, 'White', true, 414, 284, 3, 134.99),
+(7, 'MasterBox Q300L', 'MCB-Q300L-KANN', 2, 'Black', false, 386, 230, 1, 39.99),
+(5, 'ROG Hyperion GR701 Tempered Glass', 'GR701/BK/PWMFAN', 4, 'Black', false, 659, 268, 4, 499.99),
+(18, 'O11 Dynamic EVO XL RGB Tempered Glass', 'G99.O11DEXL-X.0', 4, 'Black', true, 522, 304, 0, 234.99);
 
