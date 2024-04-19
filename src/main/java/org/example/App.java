@@ -25,16 +25,30 @@ public class App
         brandDao = new BrandDAO(basicDataSource);
 
         Scanner input = new Scanner(System.in);
-        //Create a brand
-        System.out.println("Create a brand");
-        String userInput = input.nextLine();
-        Brand newBrand = new Brand();
-        newBrand.setName(userInput);
-        newBrand = brandDao.createBrand(newBrand);
-        System.out.println(newBrand.getName() + " created");
+//        //Create a brand
+//        System.out.println("Create a brand");
+//        String userInput = input.nextLine();
+//        Brand newBrand = new Brand();
+//        newBrand.setName(userInput);
+//        newBrand = brandDao.createBrand(newBrand);
+//        System.out.println(newBrand.getName() + " created");
+//
+//        //Update a brand
+//        System.out.println("Choose a brand to update");
+//        List<Brand> brands = brandDao.getAllBrands();
+//        int i = 1;
+//        for(Brand brand : brands){
+//            System.out.println(i + ") " + brand.getName());
+//            i++;
+//        }
+//        int selectedBrand = Integer.parseInt(input.nextLine());
+//        System.out.println("What is the new name");
+//        String newBrandName = input.nextLine();
+//        Brand brandToUpdate = new Brand(selectedBrand, "");
+//        brandToUpdate.setName(newBrandName);
+//        brandDao.updateBrand(brandToUpdate);
 
-        //Update a brand
-        System.out.println("Choose a brand to update");
+        System.out.println("Select a brand to remove: ");
         List<Brand> brands = brandDao.getAllBrands();
         int i = 1;
         for(Brand brand : brands){
@@ -42,11 +56,7 @@ public class App
             i++;
         }
         int selectedBrand = Integer.parseInt(input.nextLine());
-        System.out.println("What is the new name");
-        String newBrandName = input.nextLine();
-        Brand brandToUpdate = new Brand(selectedBrand, "");
-        brandToUpdate.setName(newBrandName);
-        brandDao.updateBrand(brandToUpdate);
+        brandDao.deleteBrandById(selectedBrand);
 //        Scanner scanner = new Scanner(System.in);
 //        System.out.println("Enter brand search term: ");
 //        String searchTerm = scanner.nextLine();

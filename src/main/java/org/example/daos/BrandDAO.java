@@ -69,6 +69,27 @@ public class BrandDAO {
         }
     }
 
+    public int deleteBrandById(int brandId){
+        int numOfRows = 0;
+        try{
+            jdbcTemplate.update("delete from storage_drive where brand_id = ?;", brandId);
+            jdbcTemplate.update("delete from cpu_cooler where brand_id = ?;", brandId);
+            jdbcTemplate.update("delete from fans where brand_id = ?;", brandId);
+            jdbcTemplate.update("delete from processor where brand_id = ?;", brandId);
+            jdbcTemplate.update("delete from graphics_card where brand_id = ?;", brandId);
+            jdbcTemplate.update("delete from motherboard where brand_id = ?;", brandId);
+            jdbcTemplate.update("delete from ram where brand_id = ?;", brandId);
+            jdbcTemplate.update("delete from psu where brand_id = ?;", brandId);
+            jdbcTemplate.update("delete from pc_case where brand_id = ?;", brandId);
+            numOfRows = jdbcTemplate.update("delete from brand where brand_id = ?;", brandId);
+        }catch (CannotGetJdbcConnectionException e){
+            throw new DaoException("Unable to connect to database or server. ", e);
+        }catch (DataIntegrityViolationException e){
+            throw new DaoException("Error deleting brand. ", e);
+        }
+        return numOfRows;
+    }
+
     public Brand mapRowToBrand(SqlRowSet rowSet){
         Brand brand = new Brand();
         brand.setId(rowSet.getInt("brand_id"));
