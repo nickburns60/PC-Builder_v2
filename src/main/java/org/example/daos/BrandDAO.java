@@ -52,6 +52,22 @@ public class BrandDAO {
             throw new DaoException("Error creating new brand. ", e);
         }
     }
+    public Brand updateBrand(Brand brand){
+        Brand updatedBrand = null;
+        try{
+            int numOfRows = jdbcTemplate.update("update brand set brand_name=? where brand_id=?;", brand.getName(), brand.getId());
+            if(numOfRows == 0){
+                throw new DaoException("Zero rows affected, expected at least 1. ");
+            }else{
+                updatedBrand = getBrandById(brand.getId());
+            }
+            return updatedBrand;
+        }catch (CannotGetJdbcConnectionException e){
+            throw new DaoException("Unable to connect to database or server. ", e);
+        }catch (DataIntegrityViolationException e){
+            throw new DaoException("Error updating brand. ", e);
+        }
+    }
 
     public Brand mapRowToBrand(SqlRowSet rowSet){
         Brand brand = new Brand();
