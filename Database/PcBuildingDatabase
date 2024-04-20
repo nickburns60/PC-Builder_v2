@@ -127,7 +127,7 @@ create table psu (
 
 create table pc_case (
 	case_id serial primary key,
-	form_factor_id int references form_factor,
+	form_factor_id int references form_factornot null,
 	brand_id int references brand not null,
 	product_name varchar(50) not null,
 	model varchar(50) unique not null,
@@ -138,6 +138,19 @@ create table pc_case (
 	num_fans_included int not null,
 	price numeric(5,2) not null
 );
+
+create table user_pc_build (
+	pc_id serial primary key,
+	processor_id int references processor not null,
+	graphics_card_id int references graphics_card not null,
+	motherboard_id int references motherboard not null,
+	ram_id int references ram not null,
+	psu_id int references psu not null,
+	storage_drive_id int references storage_drive not null,
+	case_id int references pc_case not null,
+	fan_id int references fans not null,
+	cpu_cooler_id int references cpu_cooler not null
+)
 
 insert into brand (brand_name) values
 /*1*/('Adata'), /*2*/('AMD'), /*3*/('Arctic Cooling'), /*4*/('ASRock'), /*5*/('Asus'),
