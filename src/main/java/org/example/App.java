@@ -3,12 +3,11 @@ package org.example;
         import org.apache.commons.dbcp2.BasicDataSource;
         import org.example.daos.BrandDAO;
         import org.example.daos.GraphicsCardDao;
+        import org.example.daos.MotherboardDao;
         import org.example.daos.ProcessorDao;
-        import org.example.models.Brand;
-        import org.example.models.GraphicsCard;
-        import org.example.models.Processor;
-        import org.example.models.UserPcBuild;
+        import org.example.models.*;
         import viewmodels.GPUWithBrandWattage;
+        import viewmodels.MoboWithSocketFormRamBrand;
         import viewmodels.ProcessorWithBrandSocketRam;
 
         import java.util.List;
@@ -21,6 +20,7 @@ public class App
     public static BrandDAO brandDao;
     public static ProcessorDao processorDao;
     public static GraphicsCardDao graphicsCardDao;
+    public static MotherboardDao motherboardDao;
     public static void main( String[] args )
     {
         basicDataSource = new BasicDataSource();
@@ -31,6 +31,7 @@ public class App
         brandDao = new BrandDAO(basicDataSource);
         processorDao = new ProcessorDao(basicDataSource);
         graphicsCardDao = new GraphicsCardDao(basicDataSource);
+        motherboardDao = new MotherboardDao(basicDataSource);
 
 
         boolean continueProgram = true;
@@ -119,6 +120,7 @@ public class App
                 System.out.println(partCategories);
                 String categorySelection = input.nextLine();
                 if(categorySelection.equals("1")){
+                    //processor selection
                     System.out.println("Press enter to view Processor selection.");
                     input.nextLine();
                     List<ProcessorWithBrandSocketRam> processors = processorDao.getAllProcessorsWithFullInfoDisplayed();
@@ -130,9 +132,11 @@ public class App
                     int processorId = Integer.parseInt(processorSelection);
                     userPcBuild.setProcessorId(processorId);
                     Processor selectedProcessor = processorDao.getProcessorByProcessorId(processorId);
-                    System.out.println("You have selected " + selectedProcessor);
+                    String selectedParts = "You have selected " + selectedProcessor + " for processor";
+                    System.out.println(selectedParts);
 
 
+                    //gpu selection
                     System.out.println("Press enter to view Graphics Card selection.");
                     input.nextLine();
                     List<GPUWithBrandWattage> gpus = graphicsCardDao.getAllGpusWithFullInfoDisplayed();
@@ -144,9 +148,22 @@ public class App
                     int gpuId = Integer.parseInt(gpuSelection);
                     userPcBuild.setGraphicsCardId(gpuId);
                     GraphicsCard selectedGraphicsCard = graphicsCardDao.getGraphicsCardById(gpuId);
-                    System.out.println("You have selected " + selectedGraphicsCard + " for graphics card and " + selectedProcessor + " for processor.");
+                    selectedParts = selectedParts + " and " + selectedGraphicsCard + " for graphics card";
+                    System.out.println(selectedParts);
 
-
+                    //mobo selection
+                    System.out.println("Press enter to view Motherboard selection.");
+                    input.nextLine();
+                    List<MoboWithSocketFormRamBrand> mobos = motherboardDao.getCompatibleMobos(selectedProcessor.getSocketId());
+                    for (MoboWithSocketFormRamBrand mobo : mobos){
+                        System.out.println(mobo);
+                    }
+                    System.out.println("Select a motherboard");
+                    int moboId = Integer.parseInt(input.nextLine());
+                    userPcBuild.setMotherboardId(moboId);
+                    Motherboard selectedMobo = motherboardDao.getMotherboardById(moboId);
+                    selectedParts = selectedParts + " and " + selectedMobo + " for motherboard";
+                    System.out.println(selectedParts);
                 }
             }
         }
