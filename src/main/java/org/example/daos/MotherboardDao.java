@@ -16,9 +16,9 @@ public class MotherboardDao {
         jdbcTemplate = new JdbcTemplate(basicDataSource);
     }
 
-    public List<MoboWithSocketFormRamBrand> getCompatibleMobos(int socketId){
+    public List<MoboWithSocketFormRamBrand> getCompatibleMobosBySocketId(int socketId){
         List<MoboWithSocketFormRamBrand> mobos = new ArrayList<>();
-        String sql = "select motherboard_id, brand_name, product_name, socket_type, form_factor_name, ram_type_name, price\n" +
+        String sql = "select motherboard_id, brand_name, product_name, socket_type, form_factor_name, ram_type_name, price, motherboard.socket_id as socket_num\n" +
                 "from motherboard\n" +
                 "join brand on brand.brand_id = motherboard.brand_id\n" +
                 "join socket on socket.socket_id = motherboard.socket_id\n" +
@@ -35,7 +35,7 @@ public class MotherboardDao {
             mobo.setFormFactorName(results.getString("form_factor_name"));
             mobo.setRamTypeName(results.getString("ram_type_name"));
             mobo.setPrice(results.getBigDecimal("price"));
-            mobo.setSocketId(results.getInt("socket.socket_id"));
+            mobo.setSocketId(results.getInt("socket_num"));
             mobos.add(mobo);
         }
         return mobos;

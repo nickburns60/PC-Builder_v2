@@ -1,14 +1,12 @@
 package org.example;
 
         import org.apache.commons.dbcp2.BasicDataSource;
-        import org.example.daos.BrandDAO;
-        import org.example.daos.GraphicsCardDao;
-        import org.example.daos.MotherboardDao;
-        import org.example.daos.ProcessorDao;
+        import org.example.daos.*;
         import org.example.models.*;
         import viewmodels.GPUWithBrandWattage;
         import viewmodels.MoboWithSocketFormRamBrand;
         import viewmodels.ProcessorWithBrandSocketRam;
+        import viewmodels.RamWithBrandRamType;
 
         import java.util.List;
         import java.util.Scanner;
@@ -21,6 +19,7 @@ public class App
     public static ProcessorDao processorDao;
     public static GraphicsCardDao graphicsCardDao;
     public static MotherboardDao motherboardDao;
+    public static RamDao ramDao;
     public static void main( String[] args )
     {
         basicDataSource = new BasicDataSource();
@@ -32,6 +31,7 @@ public class App
         processorDao = new ProcessorDao(basicDataSource);
         graphicsCardDao = new GraphicsCardDao(basicDataSource);
         motherboardDao = new MotherboardDao(basicDataSource);
+        ramDao = new RamDao(basicDataSource);
 
 
         boolean continueProgram = true;
@@ -148,13 +148,13 @@ public class App
                     int gpuId = Integer.parseInt(gpuSelection);
                     userPcBuild.setGraphicsCardId(gpuId);
                     GraphicsCard selectedGraphicsCard = graphicsCardDao.getGraphicsCardById(gpuId);
-                    selectedParts = selectedParts + " and " + selectedGraphicsCard + " for graphics card";
+                    selectedParts = selectedParts + " | " + selectedGraphicsCard + " for graphics card";
                     System.out.println(selectedParts);
 
                     //mobo selection
                     System.out.println("Press enter to view Motherboard selection.");
                     input.nextLine();
-                    List<MoboWithSocketFormRamBrand> mobos = motherboardDao.getCompatibleMobos(selectedProcessor.getSocketId());
+                    List<MoboWithSocketFormRamBrand> mobos = motherboardDao.getCompatibleMobosBySocketId(selectedProcessor.getSocketId());
                     for (MoboWithSocketFormRamBrand mobo : mobos){
                         System.out.println(mobo);
                     }
@@ -162,7 +162,21 @@ public class App
                     int moboId = Integer.parseInt(input.nextLine());
                     userPcBuild.setMotherboardId(moboId);
                     Motherboard selectedMobo = motherboardDao.getMotherboardById(moboId);
-                    selectedParts = selectedParts + " and " + selectedMobo + " for motherboard";
+                    selectedParts = selectedParts + " | " + selectedMobo + " for motherboard";
+                    System.out.println(selectedParts);
+
+                    //ram selection
+                    System.out.println("Press enter to view Ram selection");
+                    input.nextLine();
+                    List<RamWithBrandRamType> compatibleRam = ramDao.getCompatibleRamByRamTypeId(selectedMobo.getRamTypeId());
+                    for(RamWithBrandRamType ram : compatibleRam){
+                        System.out.println(ram);
+                    }
+                    System.out.println("Select one of our ram options");
+                    int ramId = Integer.parseInt(input.nextLine());
+                    userPcBuild.setRamId(ramId);
+                    Ram selectedRam = ramDao.getRamById(ramId);
+                    selectedParts = selectedParts + " | " + selectedRam + " for ram";
                     System.out.println(selectedParts);
                 }
             }
