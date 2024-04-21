@@ -1,3 +1,4 @@
+drop table if exists user_pc_build;
 drop table if exists pc_case;
 drop table if exists psu;
 drop table if exists ram;
@@ -127,7 +128,7 @@ create table psu (
 
 create table pc_case (
 	case_id serial primary key,
-	form_factor_id int references form_factornot null,
+	form_factor_id int references form_factor not null,
 	brand_id int references brand not null,
 	product_name varchar(50) not null,
 	model varchar(50) unique not null,
@@ -150,7 +151,7 @@ create table user_pc_build (
 	case_id int references pc_case not null,
 	fan_id int references fans not null,
 	cpu_cooler_id int references cpu_cooler not null
-)
+);
 
 insert into brand (brand_name) values
 /*1*/('Adata'), /*2*/('AMD'), /*3*/('Arctic Cooling'), /*4*/('ASRock'), /*5*/('Asus'),
@@ -288,22 +289,22 @@ insert into fans (brand_id, product_name, model, size_mm, num_of_fans, color, rg
 (23, 'F140 Duo RGB', 'RF-D14SF-W1', 140, 1, 'White', true, 34.99),
 (23, 'F120 RGB', 'RF-R12SF-B1', 120, 1, 'Black', true, 24.99);
 
-insert into processor (brand_id, socket_id, ram_type_id, product_name, model, price) values
-(17, 3, 3, 'Core i5-12600K', 'BX8071512600K', 299.99),
-(17, 3, 3, 'Core i7-12700K', 'BX8071512700K', 419.99),
-(17, 3, 3, 'Core i9-12900K', 'BX8071512900K', 619.99),
-(17, 3, 3, 'Core i5-13600K', 'BX8071513600K', 339.99),
-(17, 3, 3, 'Core i7-13700K', 'BX8071513700K', 489.99),
-(17, 3, 3, 'Core i9-13900K', 'BX8071513900K', 689.99),
-(17, 3, 3, 'Core i5-14600K', 'BX8071514600K', 339.99),
-(17, 3, 3, 'Core i7-14700K', 'BX8071514700K', 444.99),
-(17, 3, 3, 'Core i9-14900K', 'BX8071514900K', 619.99),
-(2, 1, 1, 'Ryzen 5 5600X', '100-100000065BOX', 299.00),
-(2, 1, 1, 'Ryzen 7 5800X', '100-100000063WOF', 449.00),
-(2, 1, 1, 'Ryzen 9 5900X', '100-100000061WOF', 549.00),
-(2, 2, 2, 'Ryzen 5 7600X', '100-100000593WOF', 299.99),
-(2, 2, 2, 'Ryzen 7 7700X', '100-100000591WOF', 399.99),
-(2, 2, 2, 'Ryzen 9 7900X', '100-100000589WOF', 549.99);
+insert into processor (brand_id, product_name, socket_id, ram_type_id, model, price) values
+(17, 'Core i5-12600K', 3, 3,'BX8071512600K', 299.99),
+(17, 'Core i7-12700K', 3, 3, 'BX8071512700K', 419.99),
+(17, 'Core i9-12900K', 3, 3, 'BX8071512900K', 619.99),
+(17, 'Core i5-13600K', 3, 3, 'BX8071513600K', 339.99),
+(17, 'Core i7-13700K', 3, 3, 'BX8071513700K', 489.99),
+(17, 'Core i9-13900K', 3, 3, 'BX8071513900K', 689.99),
+(17, 'Core i5-14600K', 3, 3, 'BX8071514600K', 339.99),
+(17, 'Core i7-14700K', 3, 3, 'BX8071514700K', 444.99),
+(17, 'Core i9-14900K', 3, 3, 'BX8071514900K', 619.99),
+(2, 'Ryzen 5 5600X', 1, 1, '100-100000065BOX', 299.00),
+(2, 'Ryzen 7 5800X', 1, 1, '100-100000063WOF', 449.00),
+(2, 'Ryzen 9 5900X', 1, 1, '100-100000061WOF', 549.00),
+(2, 'Ryzen 5 7600X', 2, 2, '100-100000593WOF', 299.99),
+(2, 'Ryzen 7 7700X', 2, 2, '100-100000591WOF', 399.99),
+(2, 'Ryzen 9 7900X', 2, 2, '100-100000589WOF', 549.99);
 
 insert into graphics_card (brand_id, product_name, model, psu_wattage_id, price) values
 (22, 'GeForce RTX 3060 Ti Founders Edition', '900-1G142-2520-000', 4, 349.99),

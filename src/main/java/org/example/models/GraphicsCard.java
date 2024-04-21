@@ -2,35 +2,33 @@ package org.example.models;
 
 import java.math.BigDecimal;
 
-public class Processor {
-    private int processorId;
+public class GraphicsCard {
+    private int graphicsCardId;
     private int brandId;
-    private int socketId;
-    private int ramTypeId;
     private String productName;
     private String model;
+    private int psuWattageId;
     private BigDecimal price;
 
-    public Processor() {
+    public GraphicsCard() {
     }
 
-    public Processor(int processorId, int brandId, int socketId, int ramTypeId, String productName,
-                     String model, BigDecimal price) {
-        this.processorId = processorId;
+    public GraphicsCard(int graphicsCardId, int brandId, String productName, String model, int psuWattageId,
+                        BigDecimal price) {
+        this.graphicsCardId = graphicsCardId;
         this.brandId = brandId;
-        this.socketId = socketId;
-        this.ramTypeId = ramTypeId;
         this.productName = productName;
         this.model = model;
+        this.psuWattageId = psuWattageId;
         this.price = price;
     }
 
-    public int getProcessorId() {
-        return processorId;
+    public int getGraphicsCardId() {
+        return graphicsCardId;
     }
 
-    public void setProcessorId(int processorId) {
-        this.processorId = processorId;
+    public void setGraphicsCardId(int graphicsCardId) {
+        this.graphicsCardId = graphicsCardId;
     }
 
     public int getBrandId() {
@@ -39,22 +37,6 @@ public class Processor {
 
     public void setBrandId(int brandId) {
         this.brandId = brandId;
-    }
-
-    public int getSocketId() {
-        return socketId;
-    }
-
-    public void setSocketId(int socketId) {
-        this.socketId = socketId;
-    }
-
-    public int getRamTypeId() {
-        return ramTypeId;
-    }
-
-    public void setRamTypeId(int ramTypeId) {
-        this.ramTypeId = ramTypeId;
     }
 
     public String getProductName() {
@@ -71,6 +53,14 @@ public class Processor {
 
     public void setModel(String model) {
         this.model = model;
+    }
+
+    public int getPsuWattageId() {
+        return psuWattageId;
+    }
+
+    public void setPsuWattageId(int psuWattageId) {
+        this.psuWattageId = psuWattageId;
     }
 
     public BigDecimal getPrice() {

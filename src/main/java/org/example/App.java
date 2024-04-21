@@ -2,7 +2,14 @@ package org.example;
 
         import org.apache.commons.dbcp2.BasicDataSource;
         import org.example.daos.BrandDAO;
+        import org.example.daos.GraphicsCardDao;
+        import org.example.daos.ProcessorDao;
         import org.example.models.Brand;
+        import org.example.models.GraphicsCard;
+        import org.example.models.Processor;
+        import org.example.models.UserPcBuild;
+        import viewmodels.GPUWithBrandWattage;
+        import viewmodels.ProcessorWithBrandSocketRam;
 
         import java.util.List;
         import java.util.Scanner;
@@ -12,6 +19,8 @@ public class App
 {
     public static BasicDataSource basicDataSource;
     public static BrandDAO brandDao;
+    public static ProcessorDao processorDao;
+    public static GraphicsCardDao graphicsCardDao;
     public static void main( String[] args )
     {
         basicDataSource = new BasicDataSource();
@@ -20,6 +29,9 @@ public class App
         basicDataSource.setPassword("postgres1");
 
         brandDao = new BrandDAO(basicDataSource);
+        processorDao = new ProcessorDao(basicDataSource);
+        graphicsCardDao = new GraphicsCardDao(basicDataSource);
+
 
         boolean continueProgram = true;
         while (continueProgram){
@@ -82,27 +94,61 @@ public class App
 //            if (input.nextLine().equals("2") || input.nextLine().equalsIgnoreCase("end program")){
 //                continueProgram = false;
 //            }
-            System.out.println("Welcome to the PC part picker. We will help you build your dream computer! You may select a part below, and we will " +
-                    "provide you with options to choose from in the selected category.");
+            Scanner input = new Scanner(System.in);
+            System.out.println("Welcome to the PC part picker. We will help you build your dream computer! Choose from our options below to begin.");
+            String menu = """
+                    **************************************
+                    *** 1) Start a new pc build        ***
+                    *** 2) Update an existing pc build ***
+                    *** 3) Delete an existing pc build ***
+                    **************************************
+                    """;
+            System.out.println(menu);
+            String menuChoice = input.nextLine();
+            if(menuChoice.equals("1")){
+                //Create a UserPcBuild
+                UserPcBuild userPcBuild = new UserPcBuild();
+                System.out.println("You have chosen to build a new pc. Select which part category you would like to start with.");
+                String partCategories = """
+                        ************************
+                        *** 1) Processor     ***
+                        *** 2) Graphics Card ***
+                        *** 3) Motherboard   ***
+                        ************************
+                        """;
+                System.out.println(partCategories);
+                String categorySelection = input.nextLine();
+                if(categorySelection.equals("1")){
+                    System.out.println("Press enter to view Processor selection.");
+                    input.nextLine();
+                    List<ProcessorWithBrandSocketRam> processors = processorDao.getAllProcessorsWithFullInfoDisplayed();
+                    for(ProcessorWithBrandSocketRam processor : processors){
+                        System.out.println(processor);
+                    }
+                    System.out.println("Select a processor");
+                    String processorSelection = input.nextLine();
+                    int processorId = Integer.parseInt(processorSelection);
+                    userPcBuild.setProcessorId(processorId);
+                    Processor selectedProcessor = processorDao.getProcessorByProcessorId(processorId);
+                    System.out.println("You have selected " + selectedProcessor);
+
+
+                    System.out.println("Press enter to view Graphics Card selection.");
+                    input.nextLine();
+                    List<GPUWithBrandWattage> gpus = graphicsCardDao.getAllGpusWithFullInfoDisplayed();
+                    for(GPUWithBrandWattage gpu : gpus){
+                        System.out.println(gpu);
+                    }
+                    System.out.println("Select a graphics card");
+                    String gpuSelection = input.nextLine();
+                    int gpuId = Integer.parseInt(gpuSelection);
+                    userPcBuild.setGraphicsCardId(gpuId);
+                    GraphicsCard selectedGraphicsCard = graphicsCardDao.getGraphicsCardById(gpuId);
+                    System.out.println("You have selected " + selectedGraphicsCard + " for graphics card and " + selectedProcessor + " for processor.");
+
+
+                }
+            }
         }
-
-
-
-
-
-
-//
-
-
-
-
-//        Scanner scanner = new Scanner(System.in);
-//        System.out.println("Enter brand search term: ");
-//        String searchTerm = scanner.nextLine();
-//
-//        List<Brand> brands = brandDAO.searchBrandByName(searchTerm);
-//        for(Brand brand : brands){
-//            System.out.println(brand.getName());
-//        }
     }
 }
