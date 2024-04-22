@@ -21,6 +21,7 @@ public class App
     public static StorageDriveDao storageDriveDao;
     public static PcCaseDao pcCaseDao;
     public static CpuCoolerDao cpuCoolerDao;
+    public static FanDao fanDao;
     public static void main( String[] args )
     {
         basicDataSource = new BasicDataSource();
@@ -37,6 +38,7 @@ public class App
         storageDriveDao = new StorageDriveDao(basicDataSource);
         pcCaseDao = new PcCaseDao(basicDataSource);
         cpuCoolerDao = new CpuCoolerDao(basicDataSource);
+        fanDao = new FanDao(basicDataSource);
 
 
         boolean continueProgram = true;
@@ -238,6 +240,20 @@ public class App
                     userPcBuild.setCpuCoolerId(coolerId);
                     CpuCooler selectedCooler = cpuCoolerDao.getCoolerById(coolerId);
                     selectedParts = selectedParts + " | " + selectedCase + " for cpu cooler";
+                    System.out.println(selectedParts);
+
+                    //fan selection
+                    System.out.println("Press enter to view fan selection");
+                    input.nextLine();
+                    List<FanWithBrand> fans = fanDao.getFans();
+                    for(FanWithBrand fan : fans){
+                        System.out.println(fan);
+                    }
+                    System.out.println("Select a fan option");
+                    int fanId = Integer.parseInt(input.nextLine());
+                    userPcBuild.setFanId(fanId);
+                    Fans selectedFan = fanDao.getFanById(fanId);
+                    selectedParts = selectedParts + " | " + selectedCase + " for fans";
                     System.out.println(selectedParts);
                 }
             }

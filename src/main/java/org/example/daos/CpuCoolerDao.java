@@ -2,13 +2,10 @@ package org.example.daos;
 
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.example.models.CpuCooler;
-import org.example.models.PcCase;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
-import viewmodels.CaseWithBrandFormFactor;
 import viewmodels.CpuCoolerWithBrand;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
