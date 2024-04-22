@@ -20,6 +20,7 @@ public class App
     public static PowerSupplyDao powerSupplyDao;
     public static StorageDriveDao storageDriveDao;
     public static PcCaseDao pcCaseDao;
+    public static CpuCoolerDao cpuCoolerDao;
     public static void main( String[] args )
     {
         basicDataSource = new BasicDataSource();
@@ -35,6 +36,7 @@ public class App
         powerSupplyDao = new PowerSupplyDao(basicDataSource);
         storageDriveDao = new StorageDriveDao(basicDataSource);
         pcCaseDao = new PcCaseDao(basicDataSource);
+        cpuCoolerDao = new CpuCoolerDao(basicDataSource);
 
 
         boolean continueProgram = true;
@@ -210,7 +212,7 @@ public class App
                     selectedParts = selectedParts + " | " + selectedStorageDrive + " for storage drive";
                     System.out.println(selectedParts);
 
-                    //pc selection
+                    //case selection
                     System.out.println("Press enter to view case selection");
                     input.nextLine();
                     List<CaseWithBrandFormFactor> cases = pcCaseDao.getCompatibleCases(selectedMobo.getFormFactorId());
@@ -222,6 +224,20 @@ public class App
                     userPcBuild.setCaseId(caseId);
                     PcCase selectedCase = pcCaseDao.getCaseById(caseId);
                     selectedParts = selectedParts + " | " + selectedCase + " for case";
+                    System.out.println(selectedParts);
+
+                    //cpu cooler selection
+                    System.out.println("Press enter to view cpu cooler selection");
+                    input.nextLine();
+                    List<CpuCoolerWithBrand> coolers = cpuCoolerDao.getCompatibleCoolers(selectedCase.getLengthInMm(), selectedCase.getWidthInMm());
+                    for(CpuCoolerWithBrand cooler : coolers){
+                        System.out.println(cooler);
+                    }
+                    System.out.println("Select a cpu cooler");
+                    int coolerId = Integer.parseInt(input.nextLine());
+                    userPcBuild.setCpuCoolerId(coolerId);
+                    CpuCooler selectedCooler = cpuCoolerDao.getCoolerById(coolerId);
+                    selectedParts = selectedParts + " | " + selectedCase + " for cpu cooler";
                     System.out.println(selectedParts);
                 }
             }
