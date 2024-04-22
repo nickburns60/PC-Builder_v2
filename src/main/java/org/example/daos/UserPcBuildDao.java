@@ -37,10 +37,10 @@ public class UserPcBuildDao {
     public UserPcBuild createUserPcBuild(UserPcBuild newBuild){
         try{
             int pcId = jdbcTemplate.queryForObject("insert into user_pc_build (processor_id, graphics_card_id, " +
-                            "motherboard_id, ram_id, psu_id, storage_drive_id, case_id, fan_id, cpu_cooler_id) " +
-                            "values (?, ?, ?, ?, ?, ?, ?, ?, ?) returning pc_id;", int.class, newBuild.getProcessorId(), newBuild.getGraphicsCardId(),
+                            "motherboard_id, ram_id, psu_id, storage_drive_id, case_id, cpu_cooler_id, fan_id, total_cost) " +
+                            "values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?) returning pc_id;", int.class, newBuild.getProcessorId(), newBuild.getGraphicsCardId(),
                     newBuild.getMotherboardId(), newBuild.getRamId(), newBuild.getPsuId(), newBuild.getStorageDriveId(), newBuild.getCaseId(),
-                    newBuild.getFanId(), newBuild.getCpuCoolerId(), newBuild.getPcId());
+                    newBuild.getCpuCoolerId(), newBuild.getFanId(), newBuild.getTotalCost());
             return getUserPcBuildByPcId(pcId);
         }catch (CannotGetJdbcConnectionException e){
             throw new DaoException("Unable to connect to database or server. ", e);

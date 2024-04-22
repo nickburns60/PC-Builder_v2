@@ -5,6 +5,7 @@ package org.example;
         import org.example.models.*;
         import viewmodels.*;
 
+        import java.math.BigDecimal;
         import java.util.List;
         import java.util.Scanner;
 
@@ -22,6 +23,7 @@ public class App
     public static PcCaseDao pcCaseDao;
     public static CpuCoolerDao cpuCoolerDao;
     public static FanDao fanDao;
+    public static UserPcBuildDao userPcBuildDao;
     public static void main( String[] args )
     {
         basicDataSource = new BasicDataSource();
@@ -39,6 +41,7 @@ public class App
         pcCaseDao = new PcCaseDao(basicDataSource);
         cpuCoolerDao = new CpuCoolerDao(basicDataSource);
         fanDao = new FanDao(basicDataSource);
+        userPcBuildDao = new UserPcBuildDao(basicDataSource);
 
 
         boolean continueProgram = true;
@@ -109,12 +112,13 @@ public class App
                     *** 1) Start a new pc build        ***
                     *** 2) Update an existing pc build ***
                     *** 3) Delete an existing pc build ***
+                    *** 4) Exit pc builder             ***
                     **************************************
                     """;
             System.out.println(menu);
             String menuChoice = input.nextLine();
             if(menuChoice.equals("1")){
-                //Create a UserPcBuild
+                //Create instance of UserPcBuild
                 UserPcBuild userPcBuild = new UserPcBuild();
                 System.out.println("You have chosen to build a new pc. Select which part category you would like to start with.");
                 String partCategories = """
@@ -155,7 +159,7 @@ public class App
                     int gpuId = Integer.parseInt(gpuSelection);
                     userPcBuild.setGraphicsCardId(gpuId);
                     GraphicsCard selectedGraphicsCard = graphicsCardDao.getGraphicsCardById(gpuId);
-                    selectedParts = selectedParts + " | " + selectedGraphicsCard + " for graphics card";
+                    selectedParts = selectedParts + "\n" + selectedGraphicsCard + " for graphics card";
                     System.out.println(selectedParts);
 
                     //mobo selection
@@ -169,7 +173,7 @@ public class App
                     int moboId = Integer.parseInt(input.nextLine());
                     userPcBuild.setMotherboardId(moboId);
                     Motherboard selectedMobo = motherboardDao.getMotherboardById(moboId);
-                    selectedParts = selectedParts + " | " + selectedMobo + " for motherboard";
+                    selectedParts = selectedParts + "\n" + selectedMobo + " for motherboard";
                     System.out.println(selectedParts);
 
                     //ram selection
@@ -183,7 +187,7 @@ public class App
                     int ramId = Integer.parseInt(input.nextLine());
                     userPcBuild.setRamId(ramId);
                     Ram selectedRam = ramDao.getRamById(ramId);
-                    selectedParts = selectedParts + " | " + selectedRam + " for ram";
+                    selectedParts = selectedParts + "\n" + selectedRam + " for ram";
                     System.out.println(selectedParts);
 
                     //psu selection
@@ -197,7 +201,7 @@ public class App
                     int psuId = Integer.parseInt(input.nextLine());
                     userPcBuild.setPsuId(psuId);
                     PowerSupply selectedPsu = powerSupplyDao.getPowerSupplyById(psuId);
-                    selectedParts = selectedParts + " | " + selectedPsu + " for power supply";
+                    selectedParts = selectedParts + "\n" + selectedPsu + " for power supply";
                     System.out.println(selectedParts);
 
                     //storage drive selection
@@ -211,7 +215,7 @@ public class App
                     int storageDriveId = Integer.parseInt(input.nextLine());
                     userPcBuild.setStorageDriveId(storageDriveId);
                     StorageDrive selectedStorageDrive = storageDriveDao.getStorageDriveById(storageDriveId);
-                    selectedParts = selectedParts + " | " + selectedStorageDrive + " for storage drive";
+                    selectedParts = selectedParts + "\n" + selectedStorageDrive + " for storage drive";
                     System.out.println(selectedParts);
 
                     //case selection
@@ -225,7 +229,7 @@ public class App
                     int caseId = Integer.parseInt(input.nextLine());
                     userPcBuild.setCaseId(caseId);
                     PcCase selectedCase = pcCaseDao.getCaseById(caseId);
-                    selectedParts = selectedParts + " | " + selectedCase + " for case";
+                    selectedParts = selectedParts + "\n" + selectedCase + " for case";
                     System.out.println(selectedParts);
 
                     //cpu cooler selection
@@ -239,7 +243,7 @@ public class App
                     int coolerId = Integer.parseInt(input.nextLine());
                     userPcBuild.setCpuCoolerId(coolerId);
                     CpuCooler selectedCooler = cpuCoolerDao.getCoolerById(coolerId);
-                    selectedParts = selectedParts + " | " + selectedCase + " for cpu cooler";
+                    selectedParts = selectedParts + "\n" + selectedCooler + " for cpu cooler";
                     System.out.println(selectedParts);
 
                     //fan selection
@@ -253,9 +257,23 @@ public class App
                     int fanId = Integer.parseInt(input.nextLine());
                     userPcBuild.setFanId(fanId);
                     Fans selectedFan = fanDao.getFanById(fanId);
-                    selectedParts = selectedParts + " | " + selectedCase + " for fans";
-                    System.out.println(selectedParts);
+                    selectedParts = selectedParts + "\n" + selectedFan + " for fans";
+
+                    //get total cost of build
+                    BigDecimal totalCost = selectedProcessor.getPrice().add(selectedGraphicsCard.getPrice()).add(selectedMobo.getPrice()).add(selectedRam.getPrice())
+                            .add(selectedPsu.getPrice()).add(selectedStorageDrive.getPrice()).add(selectedCase.getPrice()).add(selectedCooler.getPrice()).add(selectedFan.getPrice());
+
+                    //insert total cost value into build info
+                    userPcBuild.setTotalCost(totalCost);
+                    userPcBuild = userPcBuildDao.createUserPcBuild(userPcBuild);
+                    System.out.println("Congrats on building your new pc! Here is your receipt:\n" +
+                            selectedParts + "\n" + "Total: " + totalCost);
+
+                    System.out.println("Press enter to return to main menu.");
+                    input.nextLine();
                 }
+            } else if (menuChoice.equals("4")) {
+                continueProgram = false;
             }
         }
     }

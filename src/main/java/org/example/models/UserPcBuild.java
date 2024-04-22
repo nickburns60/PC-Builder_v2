@@ -1,5 +1,7 @@
 package org.example.models;
 
+import java.math.BigDecimal;
+
 public class UserPcBuild {
     private int pcId;
     private int processorId;
@@ -11,12 +13,13 @@ public class UserPcBuild {
     private int caseId;
     private int fanId;
     private int cpuCoolerId;
+    private BigDecimal totalCost;
 
     public UserPcBuild() {
     }
 
     public UserPcBuild(int pcId, int processorId, int graphicsCardId, int motherboardId, int ramId,
-                       int psuId, int storageDriveId, int caseId, int fanId, int cpuCoolerId) {
+                       int psuId, int storageDriveId, int caseId, int fanId, int cpuCoolerId, BigDecimal totalCost) {
         this.pcId = pcId;
         this.processorId = processorId;
         this.graphicsCardId = graphicsCardId;
@@ -27,6 +30,15 @@ public class UserPcBuild {
         this.caseId = caseId;
         this.fanId = fanId;
         this.cpuCoolerId = cpuCoolerId;
+        this.totalCost = totalCost;
+    }
+
+    public BigDecimal getTotalCost() {
+        return totalCost;
+    }
+
+    public void setTotalCost(BigDecimal totalCost) {
+        this.totalCost = totalCost;
     }
 
     public int getPcId() {
