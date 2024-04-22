@@ -3,10 +3,7 @@ package org.example;
         import org.apache.commons.dbcp2.BasicDataSource;
         import org.example.daos.*;
         import org.example.models.*;
-        import viewmodels.GPUWithBrandWattage;
-        import viewmodels.MoboWithSocketFormRamBrand;
-        import viewmodels.ProcessorWithBrandSocketRam;
-        import viewmodels.RamWithBrandRamType;
+        import viewmodels.*;
 
         import java.util.List;
         import java.util.Scanner;
@@ -20,6 +17,7 @@ public class App
     public static GraphicsCardDao graphicsCardDao;
     public static MotherboardDao motherboardDao;
     public static RamDao ramDao;
+    public static PowerSupplyDao powerSupplyDao;
     public static void main( String[] args )
     {
         basicDataSource = new BasicDataSource();
@@ -32,6 +30,7 @@ public class App
         graphicsCardDao = new GraphicsCardDao(basicDataSource);
         motherboardDao = new MotherboardDao(basicDataSource);
         ramDao = new RamDao(basicDataSource);
+        powerSupplyDao = new PowerSupplyDao(basicDataSource);
 
 
         boolean continueProgram = true;
@@ -177,6 +176,20 @@ public class App
                     userPcBuild.setRamId(ramId);
                     Ram selectedRam = ramDao.getRamById(ramId);
                     selectedParts = selectedParts + " | " + selectedRam + " for ram";
+                    System.out.println(selectedParts);
+
+                    //psu selection
+                    System.out.println("Press enter to view Power Supply selection");
+                    input.nextLine();
+                    List<PowerSupplyWithBrandWattage> compatiblePsu = powerSupplyDao.getCompatiblePsuByWattage(selectedGraphicsCard.getPsuWattageId());
+                    for(PowerSupplyWithBrandWattage psu : compatiblePsu){
+                        System.out.println(psu);
+                    }
+                    System.out.println("Select a power supply");
+                    int psuId = Integer.parseInt(input.nextLine());
+                    userPcBuild.setPsuId(psuId);
+                    PowerSupply selectedPsu = powerSupplyDao.getPowerSupplyById(psuId);
+                    selectedParts = selectedParts + " | " + selectedPsu + " for power supply";
                     System.out.println(selectedParts);
                 }
             }
