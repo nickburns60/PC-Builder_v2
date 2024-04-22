@@ -19,6 +19,7 @@ public class App
     public static RamDao ramDao;
     public static PowerSupplyDao powerSupplyDao;
     public static StorageDriveDao storageDriveDao;
+    public static PcCaseDao pcCaseDao;
     public static void main( String[] args )
     {
         basicDataSource = new BasicDataSource();
@@ -33,6 +34,7 @@ public class App
         ramDao = new RamDao(basicDataSource);
         powerSupplyDao = new PowerSupplyDao(basicDataSource);
         storageDriveDao = new StorageDriveDao(basicDataSource);
+        pcCaseDao = new PcCaseDao(basicDataSource);
 
 
         boolean continueProgram = true;
@@ -206,6 +208,20 @@ public class App
                     userPcBuild.setStorageDriveId(storageDriveId);
                     StorageDrive selectedStorageDrive = storageDriveDao.getStorageDriveById(storageDriveId);
                     selectedParts = selectedParts + " | " + selectedStorageDrive + " for storage drive";
+                    System.out.println(selectedParts);
+
+                    //pc selection
+                    System.out.println("Press enter to view case selection");
+                    input.nextLine();
+                    List<CaseWithBrandFormFactor> cases = pcCaseDao.getCompatibleCases(selectedMobo.getFormFactorId());
+                    for(CaseWithBrandFormFactor pcCase : cases){
+                        System.out.println(pcCase);
+                    }
+                    System.out.println("Select a case");
+                    int caseId = Integer.parseInt(input.nextLine());
+                    userPcBuild.setCaseId(caseId);
+                    PcCase selectedCase = pcCaseDao.getCaseById(caseId);
+                    selectedParts = selectedParts + " | " + selectedCase + " for case";
                     System.out.println(selectedParts);
                 }
             }
