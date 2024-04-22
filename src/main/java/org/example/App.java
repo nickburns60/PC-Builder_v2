@@ -18,6 +18,7 @@ public class App
     public static MotherboardDao motherboardDao;
     public static RamDao ramDao;
     public static PowerSupplyDao powerSupplyDao;
+    public static StorageDriveDao storageDriveDao;
     public static void main( String[] args )
     {
         basicDataSource = new BasicDataSource();
@@ -31,6 +32,7 @@ public class App
         motherboardDao = new MotherboardDao(basicDataSource);
         ramDao = new RamDao(basicDataSource);
         powerSupplyDao = new PowerSupplyDao(basicDataSource);
+        storageDriveDao = new StorageDriveDao(basicDataSource);
 
 
         boolean continueProgram = true;
@@ -190,6 +192,20 @@ public class App
                     userPcBuild.setPsuId(psuId);
                     PowerSupply selectedPsu = powerSupplyDao.getPowerSupplyById(psuId);
                     selectedParts = selectedParts + " | " + selectedPsu + " for power supply";
+                    System.out.println(selectedParts);
+
+                    //storage drive selection
+                    System.out.println("Press enter to view Storage Drive selection");
+                    input.nextLine();
+                    List<StorageDriveWithBrand> storageDrives = storageDriveDao.getStorageDrivesWithBrands();
+                    for(StorageDriveWithBrand storageDrive : storageDrives){
+                        System.out.println(storageDrive);
+                    }
+                    System.out.println("Select a storage drive");
+                    int storageDriveId = Integer.parseInt(input.nextLine());
+                    userPcBuild.setStorageDriveId(storageDriveId);
+                    StorageDrive selectedStorageDrive = storageDriveDao.getStorageDriveById(storageDriveId);
+                    selectedParts = selectedParts + " | " + selectedStorageDrive + " for storage drive";
                     System.out.println(selectedParts);
                 }
             }
