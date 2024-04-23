@@ -151,7 +151,7 @@ create table user_pc_build (
 	case_id int references pc_case not null,
 	fan_id int references fans not null,
 	cpu_cooler_id int references cpu_cooler not null,
-	total_cost numeric(6,2) not null
+	total_cost decimal not null
 );
 
 insert into brand (brand_name) values

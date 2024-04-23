@@ -2,6 +2,7 @@ package org.example.daos;
 
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.example.DaoException;
+import org.example.models.Brand;
 import org.example.models.UserPcBuild;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.CannotGetJdbcConnectionException;
@@ -47,7 +48,37 @@ public class UserPcBuildDao {
         }catch (DataIntegrityViolationException e){
             throw new DaoException("Error creating UserPcBuild. ", e);
         }
+    }
 
+    public UserPcBuild updateUserPcBuild(UserPcBuild userPcBuild){
+        UserPcBuild pcBuild = null;
+        try{
+            int numOfRows = jdbcTemplate.update("update user_pc_build set processor_id=?, graphics_card_id=?, motherboard_id=?, ram_id=?, psu_id=?, storage_drive_id=?, case_id=?, cpu_cooler_id=?, " +
+                            "fan_id=?, total_cost=? where pc_id=?;", pcBuild.getProcessorId(), pcBuild.getGraphicsCardId(), pcBuild.getMotherboardId(), pcBuild.getRamId(), pcBuild.getPsuId(),
+                    pcBuild.getStorageDriveId(), pcBuild.getCaseId(), pcBuild.getCpuCoolerId(), pcBuild.getFanId());
+            if(numOfRows == 0){
+                throw new DaoException("Zero rows affected, expected at least 1. ");
+            }else{
+                pcBuild = getUserPcBuildByPcId(pcBuild.getPcId());
+            }
+            return pcBuild;
+        }catch (CannotGetJdbcConnectionException e){
+            throw new DaoException("Unable to connect to database or server. ", e);
+        }catch (DataIntegrityViolationException e){
+            throw new DaoException("Error updating brand. ", e);
+        }
+    }
+
+    public int deleteUserPcBuild(int pcId){
+        int numRows = 0;
+        try{
+            numRows = jdbcTemplate.update("delete from user_pc_build where pc_id = ?;", pcId);
+        }catch (CannotGetJdbcConnectionException e){
+            throw new DaoException("Unable to connect to database or server. ", e);
+        }catch (DataIntegrityViolationException e){
+            throw new DaoException("Error deleting brand. ", e);
+        }
+        return numRows;
     }
 
     public UserPcBuild mapRowToUserPcBuild(SqlRowSet rowSet){
