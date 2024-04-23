@@ -6,6 +6,7 @@ package org.example;
         import viewmodels.*;
 
         import java.math.BigDecimal;
+        import java.util.ArrayList;
         import java.util.List;
         import java.util.Scanner;
 
@@ -112,7 +113,8 @@ public class App
                     *** 1) Start a new pc build        ***
                     *** 2) Update an existing pc build ***
                     *** 3) Delete an existing pc build ***
-                    *** 4) Exit pc builder             ***
+                    *** 4) View all pc builds          ***
+                    *** 5) Exit pc builder             ***
                     **************************************
                     """;
             System.out.println(menu);
@@ -263,37 +265,94 @@ public class App
                 System.out.println("Press enter to return to main menu.");
                 input.nextLine();
 
-//            } else if (menuChoice.equals("2")) {
-//                //Update a brand
-////                System.out.println("Choose a brand to update");
-////                List<Brand> brands = brandDao.getAllBrands();
-////                int i = 1;
-////                for(Brand brand : brands){
-////                    System.out.println(i + ") " + brand.getName());
-////                    i++;
-////                }
-////                int selectedBrand = Integer.parseInt(input.nextLine());
-////                System.out.println("What is the new name");
-////                String newBrandName = input.nextLine();
-////                Brand brandToUpdate = new Brand(selectedBrand, "");
-////                brandToUpdate.setName(newBrandName);
-////                brandDao.updateBrand(brandToUpdate);
-//                System.out.println("Choose a pc build to update");
-//                List<UserPcBuild> pcBuilds = userPcBuildDao.getAllUserPcBuilds();
-//                for (UserPcBuild pcBuild : pcBuilds){
-//                    System.out.println(pcBuild);
-//                }
-//                int selectedBuildId = Integer.parseInt(input.nextLine());
-//                UserPcBuild selectedBuild = userPcBuildDao.getUserPcBuildByPcId(selectedBuildId);
-//                System.out.println("Enter new processor id (leave blank to skip)");
-//                int newProcessorId = Integer.parseInt(input.nextLine());
-//                System.out.println("Enter new graphics card id (leave blank to skip)");
-//                int newGraphicsCardId = Integer.parseInt(input.nextLine());
-//                System.out.println("Enter your changes");
-//                int newMoboId
+            } else if (menuChoice.equals("2")) {
+                //Update a pc build
+                System.out.println("Choose a pc build to update");
+                List<UserPcBuild> pcBuilds = userPcBuildDao.getAllUserPcBuilds();
+                for (UserPcBuild pcBuild : pcBuilds){
+                    System.out.println(pcBuild);
+                }
+                int selectedBuildId = Integer.parseInt(input.nextLine());
+                UserPcBuild selectedBuild = userPcBuildDao.getUserPcBuildByPcId(selectedBuildId);
+                System.out.println("Enter new processor id (leave blank to skip)");
+                String newProcessorId = input.nextLine();
+                System.out.println("Enter new graphics card id (leave blank to skip)");
+                String newGraphicsCardId = input.nextLine();
+                System.out.println("Enter new motherboard id (leave blank to skip)");
+                String newMoboId = input.nextLine();
+                System.out.println("Enter new ram id (leave blank to skip)");
+                String newRamId = input.nextLine();
+                System.out.println("Enter new psu id (leave blank to skip)");
+                String newPsuId = input.nextLine();
+                System.out.println("Enter new storage drive id (leave blank to skip)");
+                String newStorageDriveId = input.nextLine();
+                System.out.println("Enter new case id (leave blank to skip)");
+                String newCaseId = input.nextLine();
+                System.out.println("Enter new cpu cooler id (leave blank to skip)");
+                String newCpuCoolerId = input.nextLine();
+                System.out.println("Enter new fans id (leave blank to skip)");
+                String newFanId = input.nextLine();
+                System.out.println("Enter new total cost (leave blank to skip)");
+                String newTotal = input.nextLine();
+                if(!newProcessorId.equals("")){
+                    selectedBuild.setProcessorId(Integer.parseInt(newProcessorId));
+                }
+                if (!newGraphicsCardId.equals("")){
+                    selectedBuild.setGraphicsCardId(Integer.parseInt(newGraphicsCardId));
+                }
+                if (!newMoboId.equals("")){
+                    selectedBuild.setMotherboardId(Integer.parseInt(newMoboId));
+                }
+                if (!newRamId.equals("")){
+                    selectedBuild.setRamId(Integer.parseInt(newRamId));
+                }
+                if (!newPsuId.equals("")){
+                    selectedBuild.setPsuId(Integer.parseInt(newPsuId));
+                }
+                if (!newStorageDriveId.equals("")){
+                    selectedBuild.setStorageDriveId(Integer.parseInt(newStorageDriveId));
+                }
+                if (!newCaseId.equals("")){
+                    selectedBuild.setCaseId(Integer.parseInt(newCaseId));
+                }
+                if (!newCpuCoolerId.equals("")){
+                    selectedBuild.setCpuCoolerId(Integer.parseInt(newCpuCoolerId));
+                }
+                if (!newFanId.equals("")){
+                    selectedBuild.setFanId(Integer.parseInt(newFanId));
+                }
+                if (!newTotal.equals("")){
+                    selectedBuild.setTotalCost(new BigDecimal(newTotal));
+                }
+                selectedBuild = userPcBuildDao.updateUserPcBuild(selectedBuild);
+                System.out.println("\n*** Pc " + selectedBuild.getPcId() + " has been updated ***");
+                System.out.println("Press enter to return to main menu.");
+                input.nextLine();
             } else if (menuChoice.equals("3")) {
 
+                //delete a pc build
+                System.out.println("Select a pc build to delete");
+                List<UserPcBuild> pcBuilds = userPcBuildDao.getAllUserPcBuilds();
+                for (UserPcBuild pcBuild : pcBuilds){
+                    System.out.println(pcBuild);
+                }
+                int selectedPcBuild = Integer.parseInt(input.nextLine());
+                UserPcBuild buildToDelete = userPcBuildDao.getUserPcBuildByPcId(selectedPcBuild);
+                String buildInfo = buildToDelete.toString();
+                userPcBuildDao.deleteUserPcBuild(selectedPcBuild);
+                System.out.println(buildInfo + " has been deleted.");
+                System.out.println("\n Press enter to return to main menu.");
+                input.nextLine();
+
             } else if (menuChoice.equals("4")) {
+                System.out.println("\n Here are all the builds currently in our system:\n");
+                List<UserPcBuild> pcBuilds = userPcBuildDao.getAllUserPcBuilds();
+                for (UserPcBuild pcBuild : pcBuilds){
+                    System.out.println(pcBuild);
+                }
+                System.out.println("\n Press enter to return to the main menu.");
+                input.nextLine();
+            } else if (menuChoice.equals("5")) {
                 continueProgram = false;
             }else{
                 System.out.println("Your entry was not a listed option.");

@@ -2,7 +2,6 @@ package org.example.daos;
 
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.example.DaoException;
-import org.example.models.Brand;
 import org.example.models.UserPcBuild;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.CannotGetJdbcConnectionException;
@@ -54,12 +53,12 @@ public class UserPcBuildDao {
         UserPcBuild pcBuild = null;
         try{
             int numOfRows = jdbcTemplate.update("update user_pc_build set processor_id=?, graphics_card_id=?, motherboard_id=?, ram_id=?, psu_id=?, storage_drive_id=?, case_id=?, cpu_cooler_id=?, " +
-                            "fan_id=?, total_cost=? where pc_id=?;", pcBuild.getProcessorId(), pcBuild.getGraphicsCardId(), pcBuild.getMotherboardId(), pcBuild.getRamId(), pcBuild.getPsuId(),
-                    pcBuild.getStorageDriveId(), pcBuild.getCaseId(), pcBuild.getCpuCoolerId(), pcBuild.getFanId());
+                            "fan_id=?, total_cost=? where pc_id=?;", userPcBuild.getProcessorId(), userPcBuild.getGraphicsCardId(), userPcBuild.getMotherboardId(), userPcBuild.getRamId(), userPcBuild.getPsuId(),
+                    userPcBuild.getStorageDriveId(), userPcBuild.getCaseId(), userPcBuild.getCpuCoolerId(), userPcBuild.getFanId(), userPcBuild.getTotalCost(), userPcBuild.getPcId());
             if(numOfRows == 0){
                 throw new DaoException("Zero rows affected, expected at least 1. ");
             }else{
-                pcBuild = getUserPcBuildByPcId(pcBuild.getPcId());
+                pcBuild = getUserPcBuildByPcId(userPcBuild.getPcId());
             }
             return pcBuild;
         }catch (CannotGetJdbcConnectionException e){
@@ -93,6 +92,7 @@ public class UserPcBuildDao {
         userPcBuild.setCaseId(rowSet.getInt("case_id"));
         userPcBuild.setFanId(rowSet.getInt("fan_id"));
         userPcBuild.setCpuCoolerId(rowSet.getInt("cpu_cooler_id"));
+        userPcBuild.setTotalCost(rowSet.getBigDecimal("total_cost"));
         return userPcBuild;
     }
 }

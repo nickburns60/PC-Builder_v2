@@ -125,6 +125,6 @@ public class UserPcBuild {
     @Override
     public String toString(){
         return pcId + ")    " + "Processor Id: " + processorId + "   Graphics Card Id: " + graphicsCardId + "   Motherboard Id: " + motherboardId +
-                "   Ram Id: " + ramId + "   Power Supply Id: " + psuId + "  Storage Drive Id: " + storageDriveId + "    Case Id" + caseId + "Total Cost: " + totalCost;
+                "   Ram Id: " + ramId + "   Power Supply Id: " + psuId + "  Storage Drive Id: " + storageDriveId + "    Case Id: " + caseId + "    Total Cost: " + totalCost;
     }
 }
