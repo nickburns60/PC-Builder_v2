@@ -22,7 +22,7 @@ public class PowerSupplyDao {
                 "from psu\n" +
                 "join brand on brand.brand_id = psu.brand_id\n" +
                 "join psu_wattage on psu_wattage.psu_wattage_id = psu.psu_wattage_id\n" +
-                "where psu.psu_wattage_id >= ?\n" +
+                "where wattage >= ?\n" +
                 "order by psu_id;";
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql, wattageId);
         while (results.next()) {
